@@ -12,3 +12,5 @@ components:
       env:
         - name: HOME
           value: "/projects/home"
+        - name: SSL_CERT_DIR
+          value: /var/run/secrets/kubernetes.io/serviceaccount
