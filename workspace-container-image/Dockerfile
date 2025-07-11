@@ -3,7 +3,7 @@ FROM registry.access.redhat.com/ubi10/ubi:10.0
 ARG USER_HOME_DIR="/home/user"
 ARG WORK_DIR="/projects"
 
-ARG INSTALL_PACKAGES="procps-ng openssl git tar gzip zip xz unzip which shadow-utils bash zsh vi wget curl jq podman buildah skopeo python3-pip python3-devel fuse-overlayfs util-linux vim-minimal vim-enhanced java-17-openjdk.x86_64"
+ARG INSTALL_PACKAGES="procps-ng openssl git tar gzip zip xz unzip which shadow-utils bash zsh vi wget curl jq podman buildah skopeo python3-pip python3-devel fuse-overlayfs util-linux vim-minimal vim-enhanced java-21-openjdk.x86_64"
 
 ENV HOME=${USER_HOME_DIR}
 ENV BUILDAH_ISOLATION=chroot
@@ -39,10 +39,7 @@ RUN dnf --disableplugin=subscription-manager install -y ${INSTALL_PACKAGES}; \
     touch /etc/subgid /etc/subuid ; \
     chown 0:0 /etc/subgid ; \
     chown 0:0 /etc/subuid ; \
-    chmod -R g=u /etc/subuid /etc/subgid ; \
-    # Create Sym Links for OpenShift CLI (Assumed to be retrieved by an init-container)
-    ln -s /projects/bin/oc /usr/local/bin/oc ; \
-    ln -s /projects/bin/kubectl /usr/local/bin/kubectl
+    chmod -R g=u /etc/subuid /etc/subgid ; 
 
 USER 1000
 WORKDIR ${WORK_DIR}
