@@ -10,6 +10,18 @@ ENV BUILDAH_ISOLATION=chroot
 
 COPY --chown=0:0 entrypoint.sh /
 
+# 必要なツールをインストール
+RUN dnf install -y curl tar && \
+    dnf clean all
+
+# ocクライアントをダウンロードして /usr/local/bin に展開
+RUN curl -L -o /tmp/oc.tar.gz https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.18/openshift-client-linux-4.18.19.tar.gz && \
+    tar -xzvf /tmp/oc.tar.gz -C /usr/local/bin && \
+    rm -f /tmp/oc.tar.gz
+
+# (オプション) パーミッション確認
+RUN chmod +x /usr/local/bin/oc /usr/local/bin/kubectl
+
 RUN dnf --disableplugin=subscription-manager install -y ${INSTALL_PACKAGES}; \
     dnf update -y ; \
     dnf clean all ; \
