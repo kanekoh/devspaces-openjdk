@@ -14,3 +14,13 @@ components:
           value: "/projects/home"
         - name: SSL_CERT_DIR
           value: /var/run/secrets/kubernetes.io/serviceaccount
+events:
+  postStart:
+    - install-editor-extension
+
+commands:
+  - id: install-editor-extension
+    exec:
+      commandLine: "code --install-extension /projects/devspaces-openjdk/.vscode-plugins/konveyor-v0.1.0.vsix"
+      component: kai
+      workingDir: /projects/devspaces-openjdk
