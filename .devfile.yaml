@@ -21,6 +21,6 @@ events:
 commands:
   - id: install-editor-extension
     exec:
-      commandLine: "code --install-extension /projects/devspaces-openjdk/.vscode-plugins/konveyor-v0.1.0.vsix"
+      commandLine: "code --install-extension /projects/user/.vscode-plugins/konveyor-v0.1.0.vsix"
       component: tools
       workingDir: /projects/devspaces-openjdk
