@@ -15,8 +15,8 @@ RUN dnf install -y curl tar wget && \
     dnf clean all
 
 RUN wget https://github.com/konveyor/editor-extensions/releases/download/v0.1.0/konveyor-v0.1.0.vsix && \
-    mkdir -p ~/.vscode-plugins/ && \
-    mv konveyor-v0.1.0.vsix ~/.vscode-plugins/
+    mkdir -p /p/.vscode-plugins/ && \
+    mv konveyor-v0.1.0.vsix /projects/
 
 # ocクライアントをダウンロードして /usr/local/bin に展開
 RUN curl -L -o /tmp/oc.tar.gz https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.18/openshift-client-linux-4.18.19.tar.gz && \
