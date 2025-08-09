@@ -15,7 +15,7 @@ RUN dnf install -y curl tar wget && \
     dnf clean all
 
 # ocクライアントをダウンロードして /usr/local/bin に展開
-RUN curl -L -o /tmp/oc.tar.gz https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.18/openshift-client-linux-4.18.19.tar.gz && \
+RUN curl -L -o /tmp/oc.tar.gz https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.19/openshift-client-linux.tar.gz && \
     tar -xzvf /tmp/oc.tar.gz -C /usr/local/bin && \
     rm -f /tmp/oc.tar.gz
 
