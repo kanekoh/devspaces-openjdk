@@ -4,7 +4,7 @@ metadata:
 components:
   - name: tools
     container:
-      image: quay.io/kanekoh/openjdk:ubi
+      image: quay.io/kanekoh/openjdk:main
       cpuRequest: 50m
       cpuLimit: 1000m
       memoryRequest: 1Gi

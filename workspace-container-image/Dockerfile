@@ -1,55 +1,27 @@
-FROM registry.redhat.io/devspaces/udi-base-rhel9:3.22
+# Use official Dev Spaces base 
+#FROM registry.redhat.io/devspaces/udi-rhel9:3.18-2.1741779985
+FROM quay.io/devfile/universal-developer-image:ubi9-latest
 
-ARG USER_HOME_DIR="/"
-ARG WORK_DIR="/projects"
+USER root
 
-ARG INSTALL_PACKAGES="procps-ng openssl git tar gzip zip xz unzip which shadow-utils bash zsh vi wget curl jq podman buildah skopeo python3-pip python3-devel fuse-overlayfs util-linux vim-minimal vim-enhanced java-21-openjdk.x86_64 maven"
+# Avoid flaky mirrors, timeouts, or zchunk checksum mismatches
+RUN echo "fastestmirror=True" >> /etc/dnf/dnf.conf && \
+    echo "skip_if_unavailable=True" >> /etc/dnf/dnf.conf && \
+    echo "zchunk=False" >> /etc/dnf/dnf.conf
 
-ENV HOME=${USER_HOME_DIR}
-ENV BUILDAH_ISOLATION=chroot
+# Install dependencies required by Konveyor AI + typical tools
+RUN dnf clean all && \
+    dnf install -y --nobest --allowerasing \
+        python3.11 python3.11-devel \
+        java-17-openjdk-devel \
+        nodejs maven \
+        unzip git curl zsh \
+        gcc make glibc-devel libffi-devel openssl-devel \
+    && dnf clean all
 
-COPY --chown=0:0 entrypoint.sh /
+# Add Kai extension from GitHub release
+RUN curl -L -o /konveyor.vsix https://github.com/konveyor/editor-extensions/releases/download/v0.2.0-pre.2-1/konveyor-v0.2.0-pre.2-1.vsix
 
-COPY provider-settings.yaml \
-        /home/assets/
+ENV DEFAULT_EXTENSIONS=/konveyor.vsix   
 
-# # 必要なツールをインストール
-# RUN dnf install -y curl tar wget && \
-#     dnf clean all
-
-# # ocクライアントをダウンロードして /usr/local/bin に展開
-# RUN curl -L -o /tmp/oc.tar.gz https://mirror.openshift.com/pub/openshift-v4/clients/ocp/stable-4.19/openshift-client-linux.tar.gz && \
-#     tar -xzvf /tmp/oc.tar.gz -C /usr/local/bin && \
-#     rm -f /tmp/oc.tar.gz
-
-# # (オプション) パーミッション確認
-# RUN chmod +x /usr/local/bin/oc /usr/local/bin/kubectl
-
-# RUN dnf --disableplugin=subscription-manager install -y ${INSTALL_PACKAGES}; \
-#     dnf update -y ; \
-#     dnf clean all ; \
-#     mkdir -p /usr/local/bin ; \
-#     mkdir -p ${WORK_DIR} ; \
-#     chgrp -R 0 /home ; \
-#     chmod -R g=u /home ${WORK_DIR} ; \
-#     chmod +x /entrypoint.sh ; \
-#     chown 0:0 /etc/passwd ; \
-#     chown 0:0 /etc/group ; \
-#     chmod g=u /etc/passwd /etc/group ; \
-#     # Setup for rootless podman
-#     setcap cap_setuid+ep /usr/bin/newuidmap ; \
-#     setcap cap_setgid+ep /usr/bin/newgidmap ; \
-#     touch /etc/subgid /etc/subuid ; \
-#     chown 0:0 /etc/subgid ; \
-#     chown 0:0 /etc/subuid ; \
-#     chmod -R g=u /etc/subuid /etc/subgid ; 
-
-# RUN wget https://github.com/konveyor/editor-extensions/releases/download/v0.2.0-pre.2-1/konveyor-v0.2.0-pre.2-1.vsix && \
-#     mkdir -p /assets/ && \
-#     mv konveyor-v0.2.0-pre.2-1.vsix /assets/
-
-
-USER 1000
-WORKDIR ${WORK_DIR}
-ENTRYPOINT ["/usr/libexec/podman/catatonit","--","/entrypoint.sh"]
-CMD [ "tail", "-f", "/dev/null" ]
+USER user
