@@ -44,9 +44,9 @@ RUN dnf --disableplugin=subscription-manager install -y ${INSTALL_PACKAGES}; \
     chown 0:0 /etc/subuid ; \
     chmod -R g=u /etc/subuid /etc/subgid ; 
 
-RUN wget https://github.com/konveyor/editor-extensions/releases/download/v0.2.0-pre.2/konveyor-v0.2.0-pre.2.vsix && \
+RUN wget https://github.com/konveyor/editor-extensions/releases/download/v0.2.0-pre.2-1/konveyor-v0.2.0-pre.2-1.vsix && \
     mkdir -p /home/assets/ && \
-    mv konveyor-v0.2.0-pre.2.vsix /home/assets/
+    mv konveyor-v0.2.0-pre.2-1.vsix /home/assets/
 
 
 USER 1000
