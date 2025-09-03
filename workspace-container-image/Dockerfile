@@ -13,7 +13,7 @@ RUN echo "fastestmirror=True" >> /etc/dnf/dnf.conf && \
 RUN dnf clean all && \
     dnf install -y --nobest --allowerasing \
         python3.11 python3.11-devel \
-        java-17-openjdk-devel \
+        java-21-openjdk-devel \
         nodejs maven \
         unzip git curl zsh \
         gcc make glibc-devel libffi-devel openssl-devel \
