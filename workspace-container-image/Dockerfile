@@ -23,6 +23,7 @@ RUN dnf clean all && \
 RUN curl -L -o /konveyor.vsix https://github.com/konveyor/editor-extensions/releases/download/v0.2.0-pre.2-1/konveyor-v0.2.0-pre.2-1.vsix
 
 COPY provider-settings.yaml /provider-settings.yaml
+COPY .code-workspace /.code-workspace
 
 ENV DEFAULT_EXTENSIONS=/konveyor.vsix   
 
