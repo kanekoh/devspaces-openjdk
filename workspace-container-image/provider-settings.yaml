@@ -18,7 +18,6 @@ models:
 
     provider: "ChatOpenAI"
     args:
-    args:
       model: "gpt-oss-120b"
       configuration:
         baseURL: "https://gpt-oss-120b-llm-serving.apps.rosa.rhsc2025.c4cn.p3.openshiftapps.com/v1"
