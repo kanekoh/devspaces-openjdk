@@ -17,7 +17,8 @@ RUN dnf clean all && \
         nodejs maven \
         unzip git curl zsh \
         gcc make glibc-devel libffi-devel openssl-devel \
-    && dnf clean all
+    && dnf clean all \
+    && alternatives --set java /usr/lib/jvm/java-21-openjdk-21.0.8.0.9-1.el9.x86_64/bin/java
 
 # Add Kai extension from GitHub release
 RUN curl -L -o /konveyor.vsix https://github.com/konveyor/editor-extensions/releases/download/v0.2.0-pre.2-1/konveyor-v0.2.0-pre.2-1.vsix
