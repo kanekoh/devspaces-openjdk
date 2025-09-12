@@ -14,7 +14,7 @@ RUN dnf clean all && \
     dnf install -y --nobest --allowerasing \
         python3.11 python3.11-devel \
         java-21-openjdk-devel \
-        nodejs maven envsubst\
+        nodejs maven gettext\
         unzip git curl zsh \
         gcc make glibc-devel libffi-devel openssl-devel \
     && dnf clean all
