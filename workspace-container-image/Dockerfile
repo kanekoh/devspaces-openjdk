@@ -25,7 +25,9 @@ RUN curl -L -o /konveyor.vsix https://github.com/konveyor/editor-extensions/rele
 COPY provider-settings.yaml /provider-settings.yaml
 COPY .code-workspace /.code-workspace
 
-RUN chmod 777  /.code-workspace
+RUN chmod 777  /.code-workspace &&\
+    mkdir -p /var/assets &&\
+    git clone --branch answer https://github.com/mnakagaw-redhat/coolstore /var/assets/coolstore
 
 ENV DEFAULT_EXTENSIONS=/konveyor.vsix   
 
