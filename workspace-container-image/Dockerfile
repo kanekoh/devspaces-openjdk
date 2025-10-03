@@ -27,7 +27,7 @@ COPY .code-workspace /.code-workspace
 
 RUN chmod 777  /.code-workspace &&\
     mkdir -p /var/assets &&\
-    git clone --branch answer https://github.com/mnakagaw-redhat/coolstore /var/assets/coolstore
+    git clone --branch rhsc2025-handson-example https://github.com/mnakagaw-redhat/coolstore /var/assets/coolstore
 
 ENV DEFAULT_EXTENSIONS=/konveyor.vsix   
 
