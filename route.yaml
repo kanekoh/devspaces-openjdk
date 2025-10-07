@@ -1,0 +1,22 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    haproxy.router.openshift.io/timeout: 30s
+    haproxy.router.openshift.io/ip_whitelist: "10.0.0.0/14"
+  name: gpt-oss-120b
+  namespace: llm-serving
+  labels:
+    inferenceservice-name: gpt-oss-120b
+spec:
+  host: gpt-oss-120b-llm-serving.apps.rosa.rhsc2025.c4cn.p3.openshiftapps.com
+  to:
+    kind: Service
+    name: gpt-oss-120b-predictor
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

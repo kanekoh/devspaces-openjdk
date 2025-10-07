@@ -8,7 +8,7 @@
         "settings": {
                 "konveyor.solutionServer": {
                         "enabled": true,
-                        "url": "http://solution-server-svc.solution-server.svc.cluster.local:8000"
+                        "url": "http://ss.solution-server.svc.cluster.local:8000"
                 }
         }
 }
